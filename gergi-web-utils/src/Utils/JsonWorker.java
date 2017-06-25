@@ -5,6 +5,8 @@
  */
 package Utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,6 +47,19 @@ public class JsonWorker {
                 reader.close();
             }
         }
+    }
+    // Modify part will be added.
+    private void instantiateClasswithJson(String json, Class c) throws InstantiationException, IllegalAccessException {
+        /*String json = "{\"city\":\"Jos\",\"country\":\"Nigeria\",\"houseNumber\":\"13\",\"lga\":\"Jos South\",\n"
+                + "\"state\":\"Plateau\",\"streetName\":\"Jonah Jann\",\"village\":\"Bukuru\",\"ward\":\"1\"}";*/
+        Object object = null;
+        try {
+            object = c.newInstance();
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(JsonWorker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Gson gson = new GsonBuilder().create();
+        object = gson.fromJson(json, object.getClass());
     }
 
     /**
